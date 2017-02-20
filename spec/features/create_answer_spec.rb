@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'Create answer', %q{
+feature 'Create answer', '
   In order to help other users
   As an authenticated user
   I want to be able to answer to question
-} do
-
+' do
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer) }
@@ -22,4 +21,3 @@ feature 'Create answer', %q{
     expect(page).to have_content answer.body
   end
 end
-

@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'Create question', %q{
+feature 'Create question', '
   In order to ask people about something
   As an authenticated user
   I want to be able to ask questions
-} do
-
+' do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
@@ -17,7 +16,6 @@ feature 'Create question', %q{
     fill_in 'Title', with: question.title
     fill_in 'Body', with: question.body
     click_on 'Create'
-
 
     expect(page).to have_content question.title
     expect(page).to have_content question.body
@@ -31,7 +29,6 @@ feature 'Create question', %q{
     fill_in 'Title', with: nil
     fill_in 'Body', with: nil
     click_on 'Create'
-
 
     expect(page).to have_no_content question.title
     expect(page).to have_no_content question.body

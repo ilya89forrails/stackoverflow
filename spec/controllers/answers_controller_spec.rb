@@ -19,24 +19,23 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
- 
-      let(:question) { create(:question) }
+    let(:question) { create(:question) }
 
-      sign_in_user
+    sign_in_user
 
-      context 'author of answer' do
-        let(:answer) { create(:answer, user_id: @user.id, question_id: question.id) }
+    context 'author of answer' do
+      let(:answer) { create(:answer, user_id: @user.id, question_id: question.id) }
 
-        it 'destroys answer to question' do
-          params = { question_id: question.id, id: answer.id }
-          expect { delete :destroy, params: params }.to change(question.answers, :count).by(-1)
-        end
+      it 'destroys answer to question' do
+        params = { question_id: question.id, id: answer.id }
+        expect { delete :destroy, params: params }.to change(question.answers, :count).by(-1)
+      end
 
-        it 'redirect to question' do
-          params = { question_id: question.id, id: answer.id }
-          delete :destroy, params: params
-          expect(response).to redirect_to(question_path(question))
-        end
+      it 'redirect to question' do
+        params = { question_id: question.id, id: answer.id }
+        delete :destroy, params: params
+        expect(response).to redirect_to(question_path(question))
       end
     end
+  end
 end

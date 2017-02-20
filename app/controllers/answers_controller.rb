@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_question
-  before_action :authenticate_user!, only: [ :new, :create ]
+  before_action :authenticate_user!, only: [:new, :create]
 
   def new
     @answer = Answer.new
@@ -21,9 +21,9 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
     if current_user.id == @answer.user_id
       @answer.destroy
-      flash[:notice] ='The answer has been successfully deleted.'
+      flash[:notice] = 'The answer has been successfully deleted.'
     else
-      flash[:alert] ='You can not delete this answer.'
+      flash[:alert] = 'You can not delete this answer.'
     end
     redirect_to @answer.question
   end

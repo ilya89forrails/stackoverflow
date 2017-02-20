@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'See question and its answers', %q{
+feature 'See question and its answers', '
   In order to find the answer to interesting question
   As an any user
   I want to be able to view answers of the question
-} do
-
+' do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
   given!(:answers) { create_list(:answer, 5, question: question) }

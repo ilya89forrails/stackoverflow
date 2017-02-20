@@ -15,7 +15,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-        sign_in_user
+    sign_in_user
     context 'with valid attributes' do
       it 'saves the new question in the database' do
         expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
@@ -39,11 +39,11 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-   describe 'GET #index' do
-        sign_in_user
+  describe 'GET #index' do
+    sign_in_user
     let(:questions) { create_list(:question, 2) }
 
-    before {get :index}
+    before { get :index }
 
     it 'populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
@@ -55,8 +55,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-        sign_in_user
-   let(:question) { create(:question) }
+    sign_in_user
+    let(:question) { create(:question) }
 
     before { get :show, params: { id: question } }
 
@@ -74,22 +74,22 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-      sign_in_user
-      context 'user is the author of the question' do
-        let(:question) { create(:question, user_id: @user.id) }
+    sign_in_user
+    context 'user is the author of the question' do
+      let(:question) { create(:question, user_id: @user.id) }
 
-        it 'destroys question' do
-          params = { id: question }
-          expect { delete :destroy, params: params }.to change(@user.questions, :count).by(-1)
-        end
+      it 'destroys question' do
+        params = { id: question }
+        expect { delete :destroy, params: params }.to change(@user.questions, :count).by(-1)
       end
+    end
 
-      context 'user is not the author of the question' do
-        let(:question) { create(:question, user_id: @user.id) }
+    context 'user is not the author of the question' do
+      let(:question) { create(:question, user_id: @user.id) }
 
-        it 'does not delete the question' do
-          expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
-        end
+      it 'does not delete the question' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
+    end
   end
 end

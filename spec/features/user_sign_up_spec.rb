@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'User sign up', %q{
+feature 'User sign up', '
   In order to be start a session
   As an guest user
   I want to be able to sign up
-} do
+' do
   given(:user) { create(:user) }
 
   scenario 'Guest user tries to sign up' do
