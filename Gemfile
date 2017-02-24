@@ -61,3 +61,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'slim-rails'
 gem 'rails-controller-testing'
 gem 'devise'
+gem 'twitter-bootstrap-rails'

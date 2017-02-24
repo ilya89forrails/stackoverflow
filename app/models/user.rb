@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_many :answers, dependent: :destroy
   has_many :questions, dependent: :destroy
+
+  def author_of?(item)
+    item.user_id == id
+  end
 end

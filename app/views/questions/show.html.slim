@@ -5,7 +5,7 @@
         div style="margin-left: auto; margin-right: auto"
           h2.page-title style="text-align: center" = @question.title
           h3 = @question.body
-          - if user_signed_in?
+          - if user_signed_in? && current_user.author_of?(@question)
             = link_to 'Delete question', @question, method: :delete
 br
 
@@ -15,7 +15,7 @@ table.table.table-condensed
       - if answer.persisted?
           tr
             td = answer.body
-            - if user_signed_in?
-              td = link_to 'Delete answer', question_answers_path(answer), method: :delete, class: 'pull-right'
+            - if user_signed_in? && current_user.author_of?(answer)
+              td = link_to 'Delete answer',  answer_path(answer), method: :delete, class: 'pull-right'
 
 = render 'answers/form'

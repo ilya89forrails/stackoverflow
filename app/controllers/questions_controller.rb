@@ -20,13 +20,14 @@ class QuestionsController < ApplicationController
 
     if @question.save
       redirect_to question_path(@question)
+      flash[:notice] = 'The question has been successfully created.'
     else
       render :new
     end
   end
 
   def destroy
-    if current_user.id == @question.user_id
+    if current_user.author_of?(@question)
       @question.destroy
       flash[:notice] = 'The question has been successfully deleted.'
     else

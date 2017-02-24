@@ -17,6 +17,11 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'POST #create' do
     sign_in_user
     context 'with valid attributes' do
+      it 'assigns the new answer to the @user' do
+        post :create, question: attributes_for(:question)
+        expect(assigns(:question).user).to eq @user
+      end
+
       it 'saves the new question in the database' do
         expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
       end
@@ -82,6 +87,11 @@ RSpec.describe QuestionsController, type: :controller do
         params = { id: question }
         expect { delete :destroy, params: params }.to change(@user.questions, :count).by(-1)
       end
+
+      it 'redirects to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
 
     context 'user is not the author of the question' do
@@ -89,6 +99,11 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'does not delete the question' do
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+
+      it 'redirects to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
       end
     end
   end
