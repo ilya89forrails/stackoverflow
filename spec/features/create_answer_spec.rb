@@ -21,16 +21,16 @@ feature 'Create answer', '
     expect(page).to have_content answer.body
   end
 
-  scenario 'Authenticated user can create answer with valid attributes' do
+  scenario 'Authenticated user trying to create answer with invalid attributes' do
     sign_in(user)
 
     visit question_path(question)
 
-    fill_in 'Answer', with: answer.body
+    fill_in 'Answer', with: nil
     click_on 'Submit'
-
+    
     expect(current_path).to eq question_path(question)
-    expect(page).to have_content answer.body
+    expect(page).to have_content 'The answer cant be created.'
   end
 
   scenario 'Unauthenticated user trying to create answer' do

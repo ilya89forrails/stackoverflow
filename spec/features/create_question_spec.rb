@@ -39,7 +39,7 @@ feature 'Create question', '
     end
   end
 
-  context 'user is signed in' do
+  context 'user is not signed in' do
     scenario 'Unauthenticated user trying to create a question' do
       visit questions_path
       click_on 'Ask Question'

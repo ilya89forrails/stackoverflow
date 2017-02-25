@@ -14,7 +14,7 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it 'saves the new answer in the database' do
-          expect { post :create, question_id: question, answer: attributes_for(:answer) }.to change(question.answers, :count).by(1)
+          expect { post :create, question_id: question, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
         end
 
         it 'redirects to show view' do
@@ -28,7 +28,7 @@ RSpec.describe AnswersController, type: :controller do
   context 'user is not signed in' do
     let(:question) { create(:question) }
     it 'does not save the new answer in the database' do
-      expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to_not change(question.answers, :count)
+      expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to_not change(Answer, :count)
     end
 
     it 'not redirects to show view' do
@@ -47,7 +47,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'destroys answer to question' do
         params = { question_id: question.id, id: answer.id }
-        expect { delete :destroy, params: params }.to change(question.answers, :count).by(-1)
+        expect { delete :destroy, params: params }.to change(Answer, :count).by(-1)
       end
 
       it 'redirect to question' do
@@ -57,13 +57,18 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'user is not the author of the question' do
+    context 'user is not the author of the answer' do
       let(:user2) { create(:user, email: 'test@test.com') }
       let(:answer) { create(:answer, user_id: user2.id, question_id: question.id) }
 
-      it 'destroys answer to question' do
+      it 'cant destroy answer to question' do
         params = { question_id: question.id, id: answer.id, user_id: @user.id }
-        expect { delete :destroy, params: params }.to_not change(question.answers, :count)
+        expect { delete :destroy, params: params }.to_not change(Answer, :count)
+      end
+
+      it 'redirect to question' do
+        delete :destroy, params: { id: answer }
+        expect(response).to redirect_to answer.question
       end
     end
   end
