@@ -73,7 +73,7 @@ RSpec.describe AnswersController, type: :controller do
       let(:answer) { create(:answer, user_id: user2.id, question_id: question.id) }
 
       it 'cant destroy answer to question' do
-        params = { question_id: question.id, id: answer.id, user_id: @user.id }
+        params = { question_id: question.id, id: answer.id}
         expect { delete :destroy, params: params }.to_not change(Answer, :count)
       end
 
