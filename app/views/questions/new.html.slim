@@ -1,0 +1,9 @@
+div style="margin-left: auto; margin-right: auto; width: 16em"
+    h2.page-title style="text-align: center"New Question
+    = form_for @question do |f|
+    	= render 'shared/errors', resource: @question
+    	p = f.label :title
+        p = f.text_field :title
+        p = f.label :body
+        p = f.text_area :body
+        = f.submit 'Create'
