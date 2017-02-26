@@ -8,10 +8,11 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     if @answer.save
       flash[:notice] = 'The answer has been successfully created.'
+      redirect_to @question
     else
       flash[:notice] = 'The answer cant be created.'
+      render 'questions/show'
     end
-    redirect_to @question
   end
 
   def destroy
