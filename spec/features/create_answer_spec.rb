@@ -9,7 +9,7 @@ feature 'Create answer', '
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer) }
 
-  scenario 'Authenticated user can create answer with valid attributes' do
+  scenario 'Authenticated user can create answer with valid attributes', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -18,10 +18,13 @@ feature 'Create answer', '
     click_on 'Submit'
 
     expect(current_path).to eq question_path(question)
-    expect(page).to have_content answer.body
+    #expect(page).to have_content answer.body
+    within '.answers' do
+        expect(page).to have_content answer.body
+    end
   end
 
-  scenario 'Authenticated user trying to create answer with invalid attributes' do
+  scenario 'Authenticated user trying to create answer with invalid attributes', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -29,7 +32,11 @@ feature 'Create answer', '
     fill_in 'Answer', with: nil
     click_on 'Submit'
 
-    expect(page).to have_content 'Body can\'t be blank'
+    #expect(page).to have_content 'Body can\'t be blank'
+    expect(current_path).to eq question_path(question)
+    within '.answers' do
+      expect(page).to have_no_content answer.body
+    end
   end
 
   scenario 'Unauthenticated user trying to create answer' do
